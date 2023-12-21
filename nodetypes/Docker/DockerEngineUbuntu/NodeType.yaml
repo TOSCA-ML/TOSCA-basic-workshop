@@ -1,0 +1,27 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+
+
+node_types:
+  docker.DockerEngineUbuntu:
+    derived_from: tosca.nodes.SoftwareComponent
+    attributes:
+      port:
+        type: integer
+        default: { get_attribute: [ SELF, docker, port ] }
+    requirements:
+      - host:
+          capability: tosca.capabilities.Compute
+          relationship: tosca.relationships.HostedOn
+          occurrences: [ 1, 1 ]
+    capabilities:
+      host:
+        occurrences: [ 1, UNBOUNDED ]
+        valid_source_types: [ docker.container ]
+        type: tosca.capabilities.Compute
+    interfaces:
+      Standard:
+        type: tosca.interfaces.node.lifecycle.Standard
+        operations:
+          configure:
+            implementation:
+              primary: playbooks/create-ubuntu.yml

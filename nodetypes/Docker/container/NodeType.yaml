@@ -1,0 +1,85 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+
+node_types:
+  docker.container:
+    derived_from: tosca.nodes.SoftwareComponent
+    properties:
+      container_port:
+        type: string
+        required: false
+        default: 80
+      image_name:
+        type: string
+      container_name:
+        type: string
+        required: false
+      host_port:
+        type: string
+        required: false
+        default: 8080
+    requirements:
+      - host:
+          capability: tosca.capabilities.Compute
+          node: docker.DockerEngineUbuntu
+          relationship: tosca.relationships.HostedOn
+          occurrences: [ 1, 1 ]
+    interfaces:
+      Standard:
+        type: tosca.interfaces.node.lifecycle.Standard
+        operations:
+          stop:
+            description: The standard stop operation
+            inputs:              
+              container_name:
+                type: string
+                required: true
+                default: { get_property: [ SELF, container_name ] } 
+              ssh_username:
+                default: { get_property: [ SELF, host, host, ssh_username ] }
+              KeyFile: 
+                default: { get_property: [ SELF, host, host, KeyFile ] }
+            implementation:
+              primary: playbooks/stop.yml
+          start:
+            description: The standard start operation
+          create:
+            description: The standard create operation
+            inputs:
+              container_port:
+                type: string
+                required: true
+                default: { get_property: [ SELF, container_port ] }
+              image_name:
+                type: string
+                default: { get_property: [ SELF, image_name ] }
+              container_name:
+                type: string
+                required: true
+                default: { get_property: [ SELF, container_name ] }
+              host_port:
+                type: string
+                required: true
+                default: { get_property: [ SELF, host_port ] }
+              ssh_username:
+                default: { get_property: [ SELF, host, host, ssh_username ] }
+              KeyFile: 
+                default: { get_property: [ SELF, host, host, KeyFile ] }
+            implementation:
+              primary: playbooks/create.yml
+          configure:
+            description: The standard configure operation
+          delete:
+            description: The standard delete operation
+            inputs:              
+              container_name:
+                type: string
+                required: true
+                default: { get_property: [ SELF, container_name ] }
+              ssh_username:
+                default: { get_property: [ SELF, host, host, ssh_username ] }
+              KeyFile: 
+                default: { get_property: [ SELF, host, host, KeyFile ] }
+            implementation:
+              primary: playbooks/delete.yml
+
+ 

@@ -1,0 +1,69 @@
+---
+- name: create
+  hosts: all
+  gather_facts: true
+  become: true
+  become_method: sudo
+  vars:
+    # ansible_ssh_private_key_file: "{{ ssh_key_file }}"
+    ansible_ssh_user: "ubuntu" 
+
+  tasks:
+    - name: Create target directory
+      file:
+           path=/etc/docker/
+           state=directory
+           mode=0755
+    - name: configure docker network address, ahead of time, to solve issues with docker default network collision with UT VPN
+      copy:
+        dest: /etc/docker/daemon.json
+        content: |
+          {
+            "default-address-pools": [{"base":"172.80.0.0/16","size":24}]
+          }
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Install apt  utils
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - python3-pip
+        - python3-setuptools
+
+    # - name: Installing docker
+    #   command: "curl -fsSL https://get.docker.com/ | sh"
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+
+    - name: Install docker-ce
+      apt:
+        name: docker-ce
+    - name: Install docker-ce-cli
+      apt:
+        name: docker-ce-cli
+    - name: Install  containerd.io
+      apt:
+        name: containerd.io
+
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes 
