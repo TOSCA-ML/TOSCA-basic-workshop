@@ -5,8 +5,8 @@
   become: true
   become_method: sudo
   vars:
-    # ansible_ssh_private_key_file: "{{ ssh_key_file }}"
-    ansible_ssh_user: "ubuntu" 
+    ansible_ssh_private_key_file: "{{ KeyFile }}"
+    ansible_ssh_user: "{{ssh_username}}" 
 
   tasks:
     - name: Create target directory

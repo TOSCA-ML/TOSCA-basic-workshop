@@ -1,0 +1,38 @@
+{
+  "tosca_name": {
+    "is_set": true,
+    "data": "containerNginx"
+  },
+  "tosca_id": {
+    "is_set": true,
+    "data": "containerNginx_0"
+  },
+  "state": {
+    "is_set": true,
+    "data": "started"
+  },
+  "component_version": {
+    "is_set": false,
+    "data": null
+  },
+  "admin_credential": {
+    "is_set": false,
+    "data": null
+  },
+  "container_port": {
+    "is_set": true,
+    "data": 80
+  },
+  "image_name": {
+    "is_set": true,
+    "data": "nginx:1.13"
+  },
+  "container_name": {
+    "is_set": true,
+    "data": "testingNginx"
+  },
+  "host_port": {
+    "is_set": true,
+    "data": 8080
+  }
+}

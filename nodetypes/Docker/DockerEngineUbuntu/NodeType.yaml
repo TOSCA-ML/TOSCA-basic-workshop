@@ -22,6 +22,11 @@ node_types:
       Standard:
         type: tosca.interfaces.node.lifecycle.Standard
         operations:
-          configure:
+          create:
+            inputs:                            
+              ssh_username:
+                default: { get_property: [ SELF, host, ssh_username ] }
+              KeyFile: 
+                default: { get_property: [ SELF, host, KeyFile ] }
             implementation:
               primary: playbooks/create-ubuntu.yml
