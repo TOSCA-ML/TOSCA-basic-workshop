@@ -21,7 +21,8 @@
         * update __172.17.91.243__ as per your system
         * you may also update the username __ubuntu__, if required.
 5. Install ```git```, if it is not present
-
+6. We will be deploying below service blueprint from our local machine to the remote machine.
+    ![Service](img/service.jpeg)
 ## S1. Installation of xOpera
 xOpera is distributed as a Python package that is regularly published on PyPI. So the simplest way to test opera is to install it into a virtual environment. 
 
