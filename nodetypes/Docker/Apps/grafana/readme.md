@@ -1,0 +1,1 @@
+Refer https://min.io/docs/minio/container/index.html for more info

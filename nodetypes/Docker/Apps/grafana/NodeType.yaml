@@ -1,0 +1,69 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+
+node_types:
+  docker.Apps.grafana:
+    derived_from: tosca.nodes.SoftwareComponent
+    properties:            
+      container_name:
+        type: string
+        required: false
+      host_port:
+        type: string
+        required: false
+        default: 3000
+      username:
+        type: string
+        required: false
+        default: "admin"
+      password:
+        type: string
+        required: false
+        default: "admin"
+      data_dir:
+        type: string
+        required: true
+        description: give the absolute path where you can store data on local directory structure. This is for persistent storage.
+    requirements:
+      - host:
+          capability: tosca.capabilities.Compute
+          node: docker.DockerEngineUbuntu
+          relationship: tosca.relationships.HostedOn
+          occurrences: [ 1, 1 ]
+    interfaces:
+      Standard:
+        type: tosca.interfaces.node.lifecycle.Standard
+        inputs:              
+          container_name:
+            type: string
+            required: true
+            default: { get_property: [ SELF, container_name ] } 
+          ssh_username:
+            default: { get_property: [ SELF, host, host, ssh_username ] }
+          KeyFile: 
+            default: { get_property: [ SELF, host, host, KeyFile ] }
+        operations:
+          stop:                       
+            implementation: playbooks/stop.yml
+          start:
+            description: The standard start operation
+          create:
+            description: The standard create operation
+            inputs:                            
+              container_name: 
+                default: { get_property: [ SELF, container_name ] } 
+              host_port:  
+                default: { get_property: [ SELF, host_port ] }      
+              username:  
+                default: { get_property: [ SELF, username ] }   
+              password:  
+                default: { get_property: [ SELF, password ] }   
+              data_dir :  
+                default: { get_property: [ SELF, data_dir ] }              
+            implementation:
+              primary: playbooks/create.yml
+          configure:
+            description: The standard configure operation
+          delete:
+            implementation: playbooks/delete.yml
+
+ 

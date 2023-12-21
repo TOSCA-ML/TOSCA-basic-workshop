@@ -1,0 +1,16 @@
+---
+- name: create
+  hosts: all
+  gather_facts: true
+  become: true
+  become_method: sudo
+  vars:
+    ansible_ssh_private_key_file: "{{ KeyFile }}"
+    ansible_ssh_user: "{{ssh_username}}"
+
+  tasks:
+
+    - name: remove container 
+      docker_container:
+        name: "{{container_name}}"
+        state: stopped 

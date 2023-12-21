@@ -3,7 +3,11 @@
 ## Environment
 Two VMs
 1. TOSCA-main 	172.17.91.243
+    * python v3.10
 2. TOSCA-target  172.17.91.195
+
+## S0. Pre-requisites
+
 
 ## S1. Installation of xOpera
 
@@ -17,6 +21,7 @@ xOpera is distributed as a Python package that is regularly published on PyPI. S
 * Activate the virtual environment:  ```. .venv/bin/activate```
 * Install pip : ```pip install pip==21.3.1``` 
 * Now it is the time to install opera: ```pip install opera==0.6.8```
+    * this demo might not work with the latest version of opera (i.e. 0.7.0)
 * If you receive some errors or warnings related to ```pyyaml``` versions, please ignore them.
 * Check the installation by only issuing opera command
 ![Opera Version](img/Opera_version.jpeg)

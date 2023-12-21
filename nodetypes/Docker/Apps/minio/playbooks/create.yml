@@ -1,0 +1,30 @@
+---
+- name: create
+  hosts: all
+  gather_facts: true
+  become: true
+  become_method: sudo
+  vars:
+    ansible_ssh_private_key_file: "{{ KeyFile }}"
+    ansible_ssh_user: "{{ssh_username}}"
+
+  tasks:
+    - name: Create a directory that will contain your data in persistent way
+      file:
+        path: "{{ data_dir }}/minio/data"
+        state: directory        
+    
+    - name: Start container 
+      docker_container:
+        name: "{{container_name}}"
+        image: "quay.io/minio/minio"
+        ports:
+          - "{{host_port_api}}:9000"
+          - "{{host_port_web}}:9090"
+        env:
+          MINIO_ROOT_USER: "{{MINIO_ROOT_USER}}"
+          MINIO_ROOT_PASSWORD: "{{MINIO_ROOT_PASSWORD}}"
+        volumes:
+          -  "{{ data_dir }}/minio/data:/data"
+        command: server /data --console-address ":{{host_port_web}}"
+        state: started

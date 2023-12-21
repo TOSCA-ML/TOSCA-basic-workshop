@@ -1,0 +1,28 @@
+---
+- name: create
+  hosts: all
+  gather_facts: true
+  become: true
+  become_method: sudo
+  vars:
+    ansible_ssh_private_key_file: "{{ KeyFile }}"
+    ansible_ssh_user: "{{ssh_username}}"
+
+  tasks:
+    - name: Create a directory that will contain your whiteboards
+      file:
+        path: "{{ board_dir }}/wbo-boards"
+        state: directory
+        owner: 1000
+        group: 1000
+        recurse: yes
+    
+    - name: Start container 
+      docker_container:
+        name: "{{container_name}}"
+        image: "lovasoa/wbo:latest"
+        ports:
+          - "{{host_port}}:80"
+        volumes:
+          -  "{{ board_dir }}/wbo-boards:/opt/app/server-data"
+        state: started
