@@ -9,7 +9,7 @@
   },
   "state": {
     "is_set": true,
-    "data": "started"
+    "data": "initial"
   },
   "ssh_username": {
     "is_set": true,
@@ -24,12 +24,12 @@
     "data": "172.17.91.195"
   },
   "private_address": {
-    "is_set": true,
-    "data": "172.17.91.195"
+    "is_set": false,
+    "data": null
   },
   "public_address": {
-    "is_set": true,
-    "data": "172.17.91.195"
+    "is_set": false,
+    "data": null
   },
   "networks": {
     "is_set": false,
@@ -40,11 +40,11 @@
     "data": null
   },
   "public_ip": {
-    "is_set": true,
-    "data": "172.17.91.195"
+    "is_set": false,
+    "data": null
   },
   "id": {
-    "is_set": true,
-    "data": "172.17.91.195"
+    "is_set": false,
+    "data": null
   }
 }

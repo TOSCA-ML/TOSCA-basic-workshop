@@ -1,16 +1,28 @@
 # TOSCA-basic-workshop
 
 ## Environment
-Two VMs
-1. TOSCA-main 	172.17.91.243
+### Two VMs
+1. TOSCA-main 	
+    * __Purpose__: This is my local machine. From here I will be orchestrating my service blueprint.
+    * IP: 172.17.91.243
+    * OS: ubuntu 
     * python v3.10
-2. TOSCA-target  172.17.91.195
-
-## S0. Pre-requisites
-
+2. TOSCA-target 
+    * __Purpose__: This is my remote/target machine. I will deploy all the services (e.g. docker engine, and some other containerized apps) atop this machine/VM.
+    * IP: 172.17.91.243
+    * OS: ubuntu 
+3. Note down the key file.
+    * lets keep the key file in __/home/ubuntu/.ssh/__ folder.
+    * For me, the key file name is *chinmayadehury* 
+4. Make sure that you can login to __TOSCA-target__ VM from the local machine (e.g. from __TOSCA-main__)
+    * using follwing command you should be able to login to your remote machine
+    ```ssh -i /home/ubuntu/.ssh/chinmayadehury ubuntu@172.17.91.243```
+        * update __/home/ubuntu/.ssh/chinmayadehury__ as per your system
+        * update __172.17.91.243__ as per your system
+        * you may also update the username __ubuntu__, if required.
+5. Install ```git```, if it is not present
 
 ## S1. Installation of xOpera
-
 xOpera is distributed as a Python package that is regularly published on PyPI. So the simplest way to test opera is to install it into a virtual environment. 
 
 * Login to ```TOSCA-main``` VM
@@ -33,11 +45,31 @@ cd $HOME/opera
 . .venv/bin/activate
 opera
 ```
-## S2. Get the TOSCA definitions
+
+## S2. Deployment
+* Make sure you are inside local machine ```TOSCA-main```
+* Activate the virtual environment, if not, using following command:
+    ```
+        cd $HOME/opera
+        . .venv/bin/activate
+    ```
+* Come out of ```opera``` directory using ```cd ..``` command. 
+* Clone the https://github.com/TOSCA-ML/TOSCA-basic-workshop repository
+```git clone https://github.com/TOSCA-ML/TOSCA-basic-workshop```
+* ```cd TOSCA-basic-workshop```
+* Open ```service.yaml``` file. Update the following and save:
+    * Update the following propertise of ```RemoteWorkstation_VM``` node
+        * ```ssh_username```,  ```KeyFile```, and ```external_ip```
+    * Similar to above update the properties of ```containerNginx```, ```containerHttp```, ```myWhiteboard```, ```myminio```, and ```mygrafana``` nodes.
+    * If you dont need any node (except ```RemoteWorkstation_VM``` and ```containerNginx```), please command that section in ```service.yaml``` file. 
+    * No need to udpate the ```DockerEngine``` node. Leave it to default.
+* Now it's time to deploy the service blueprint using the command ```opera deploy -c service.yaml```.
+
+<!-- ## S2. Get the TOSCA definitions
 * Login to ```TOSCA-main``` VM
 * Make sure you have activated the virtual environment.
 * cd $HOME
-* Fork https://gitlab.cs.ut.ee/devops22fallpub/radon-particles repository ```git clone https://gitlab.cs.ut.ee/devops22fallpub/radon-particles```
+* Fork https://gitlab.cs.ut.ee/devops22fallpub/radon-particles repository ```git clone https://gitlab.cs.ut.ee/devops22fallpub/radon-particles``` -->
 
 
 

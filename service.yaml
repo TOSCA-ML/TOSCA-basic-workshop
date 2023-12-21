@@ -25,59 +25,59 @@ topology_template:
         - host:
             node: RemoteWorkstation_VM
 
-    # containerNginx:
-    #   type: docker.container
-    #   properties:
-    #     container_port: 80
-    #     image_name: "nginx:1.13"
-    #     container_name: "testingNginx2"
-    #     host_port: 8084        
-    #   requirements:
-    #     - host:
-    #         node: DockerEngine
+    containerNginx:
+      type: docker.container
+      properties:
+        container_port: 80
+        image_name: "nginx:1.13"
+        container_name: "testingNginx2"
+        host_port: 8084        
+      requirements:
+        - host:
+            node: DockerEngine
     
-    # containerHttp:
-    #   type: docker.container
-    #   properties:
-    #     container_port: 80
-    #     image_name: "httpd:2.4"
-    #     container_name: "testingHttp"
-    #     host_port: 8081        
-    #   requirements:
-    #     - host:
-    #         node: DockerEngine
+    containerHttp:
+      type: docker.container
+      properties:
+        container_port: 80
+        image_name: "httpd:2.4"
+        container_name: "testingHttp"
+        host_port: 8081        
+      requirements:
+        - host:
+            node: DockerEngine
     
-    # myWhiteboard:
-    #   type: docker.Apps.WBO
-    #   properties:                
-    #     container_name: "mywhiteboard"
-    #     host_port: 5001
-    #     board_dir: "/home/ubuntu/"        
-    #   requirements:
-    #     - host:
-    #         node: DockerEngine
+    myWhiteboard:
+      type: docker.Apps.WBO
+      properties:                
+        container_name: "mywhiteboard"
+        host_port: 5001
+        board_dir: "/home/ubuntu/"        
+      requirements:
+        - host:
+            node: DockerEngine
 
-    # myminio:
-    #   type: docker.Apps.minio
-    #   properties:                
-    #     container_name: "myminio"
-    #     host_port_api: 9000
-    #     host_port_web: 9090
-    #     MINIO_ROOT_USER: "ITSME"
-    #     MINIO_ROOT_PASSWORD: "NOTME123"
-    #     data_dir: "/home/ubuntu/"        
-    #   requirements:
-    #     - host:
-    #         node: DockerEngine
+    myminio:
+      type: docker.Apps.minio
+      properties:                
+        container_name: "myminio"
+        host_port_api: 9000
+        host_port_web: 9090
+        MINIO_ROOT_USER: "ITSME"
+        MINIO_ROOT_PASSWORD: "NOTME123"
+        data_dir: "/home/ubuntu/"        
+      requirements:
+        - host:
+            node: DockerEngine
 
-    # mygrafana:
-    #   type: docker.Apps.grafana
-    #   properties:                
-    #     container_name: "mygrafana"
-    #     host_port: 3000
-    #     username: "admin"
-    #     password: "admin"
-    #     data_dir: "/home/ubuntu/"        
-    #   requirements:
-    #     - host:
-    #         node: DockerEngine
+    mygrafana:
+      type: docker.Apps.grafana
+      properties:                
+        container_name: "mygrafana"
+        host_port: 3000
+        username: "admin"
+        password: "admin"
+        data_dir: "/home/ubuntu/"        
+      requirements:
+        - host:
+            node: DockerEngine
